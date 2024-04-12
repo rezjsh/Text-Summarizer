@@ -5,3 +5,9 @@ data_acquisition:
   source_URL: https://github.com/rezjsh/data/raw/main/summarizer-data.zip
   local_data_file: artifacts/data_acquisition/data.zip
   unzip_dir: artifacts/data_acquisition
+
+data_verification:
+  root_dir: artifacts/data_verification
+  STATUS_FILE: artifacts/data_verification/status.txt
+  INFO_FILE: artifacts/data_verification/info.txt
+  ALL_REQUIRED_FILES: ["train", "test", "validation"]

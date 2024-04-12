@@ -1,6 +1,7 @@
 from textsummarizer.constants import *
 from textsummarizer.utils.common import read_yaml, create_directories
 from textsummarizer.components.data_acquisition import DataAcquisition
+from textsummarizer.components.data_verification import DataVerification 
 
 class ConfigHandler:
     def __init__(
@@ -69,3 +70,34 @@ class ConfigHandler:
         )  # Create a DataAcquisition instance with the data acquisition configuration
 
         return data_acquisition_config  # Return the data acquisition configuration
+
+
+
+    def get_data_verification_config(self) -> DataVerification:
+        """
+        Retrieve the data verification configuration.
+
+        This method retrieves the data verification configuration from the provided config, creates necessary directories,
+        and returns a DataVerification object.
+
+        Returns:
+            DataVerification: An object containing data verification configuration.
+
+        Raises:
+            SomeException: Description of the exception raised, if any.
+        """
+        # Retrieve the data verification configuration from the provided config
+        config = self.config.data_verification
+
+        # Create necessary directories
+        create_directories([config.root_dir])
+
+        # Create a DataVerification object with the retrieved configuration
+        data_verification_config = DataVerification(
+            root_dir=config.root_dir,
+            STATUS_FILE=config.STATUS_FILE,
+            INFO_FILE=config.INFO_FILE,
+            ALL_REQUIRED_FILES=config.ALL_REQUIRED_FILES,
+        )
+
+        return data_verification_config

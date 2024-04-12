@@ -1,8 +1,9 @@
 from textsummarizer.logging import logger
-from textsummarizer.pipeline import (DataAcquisitionPipeline)
+from textsummarizer.pipeline import (DataAcquisitionPipeline, DataVerificationPipeline)
 
 pipelines = {
     "Data Acquisition stage": DataAcquisitionPipeline(),
+    "Data Verification stage": DataVerificationPipeline(),
 }
 
 def run_pipeline(stage_name, pipeline_instance):
