@@ -19,3 +19,9 @@ class DataVerificationPipeline:
         data_verification = config.get_data_verification_config()
         data_verification.verify_all_files_exist()
         data_verification.get_csv_files_info()
+
+
+class DataTransformationPipeline:
+    def main(self):
+        data_transformation = config.get_data_transformation_config()
+        data_transformation.convert()

@@ -2,6 +2,7 @@ from textsummarizer.constants import *
 from textsummarizer.utils.common import read_yaml, create_directories
 from textsummarizer.components.data_acquisition import DataAcquisition
 from textsummarizer.components.data_verification import DataVerification 
+from textsummarizer.components.transformation import DataTransformation 
 
 class ConfigHandler:
     def __init__(
@@ -101,3 +102,17 @@ class ConfigHandler:
         )
 
         return data_verification_config
+
+     
+    def get_data_transformation_config(self) -> DataTransformation:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformation(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            tokenizer_name = config.tokenizer_name
+        )
+
+        return data_transformation_config
