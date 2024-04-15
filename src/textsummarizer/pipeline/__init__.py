@@ -25,3 +25,9 @@ class DataTransformationPipeline:
     def main(self):
         data_transformation = config.get_data_transformation_config()
         data_transformation.convert()
+
+
+class ModelTrainerPipeline:
+    def main(self):
+        model_trainer = config.get_model_trainer_config()
+        model_trainer.train()

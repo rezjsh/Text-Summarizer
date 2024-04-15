@@ -3,6 +3,7 @@ from textsummarizer.utils.common import read_yaml, create_directories
 from textsummarizer.components.data_acquisition import DataAcquisition
 from textsummarizer.components.data_verification import DataVerification 
 from textsummarizer.components.transformation import DataTransformation 
+from textsummarizer.components.model_trainer import ModelTrainer 
 
 class ConfigHandler:
     def __init__(
@@ -103,16 +104,59 @@ class ConfigHandler:
 
         return data_verification_config
 
-     
     def get_data_transformation_config(self) -> DataTransformation:
+        """
+        Get the data transformation configuration.
+
+        Returns:
+            DataTransformation: An instance of DataTransformation containing the configuration.
+        """
+        # Retrieve the data transformation configuration from the provided config
         config = self.config.data_transformation
 
+        # Create necessary directories
         create_directories([config.root_dir])
 
+        # Create a DataTransformation object with the retrieved configuration
         data_transformation_config = DataTransformation(
             root_dir=config.root_dir,
             data_path=config.data_path,
-            tokenizer_name = config.tokenizer_name
+            tokenizer_name=config.tokenizer_name
         )
 
         return data_transformation_config
+
+
+
+
+    def get_model_trainer_config(self) -> ModelTrainer:
+        """
+        Get the model trainer configuration.
+
+        Returns:
+            ModelTrainer: An instance of ModelTrainer containing the configuration.
+        """
+        # Retrieve the model trainer configuration and training parameters
+        config = self.config.model_trainer
+        params = self.params.TrainingArguments
+
+        # Create necessary directories
+        create_directories([config.root_dir])
+
+        # Create a ModelTrainer object with the retrieved configuration and parameters
+        model_trainer_config = ModelTrainer(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            model_ckpt=config.model_ckpt,
+            num_train_epochs=params.num_train_epochs,
+            warmup_steps=params.warmup_steps,
+            per_device_train_batch_size=params.per_device_train_batch_size,
+            weight_decay=params.weight_decay,
+            logging_steps=params.logging_steps,
+            evaluation_strategy=params.evaluation_strategy,
+            eval_steps=params.evaluation_strategy,  # Is this correct? Should it be params.eval_steps?
+            save_steps=params.save_steps,
+            gradient_accumulation_steps=params.gradient_accumulation_steps
+        )
+
+        return model_trainer_config
