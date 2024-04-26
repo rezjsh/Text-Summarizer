@@ -106,25 +106,37 @@ class ConfigHandler:
 
     def get_data_transformation_config(self) -> DataTransformation:
         """
-        Get the data transformation configuration.
+        Retrieves the data transformation configuration for the model.
 
         Returns:
-            DataTransformation: An instance of DataTransformation containing the configuration.
+            DataTransformation: The data transformation configuration object.
         """
-        # Retrieve the data transformation configuration from the provided config
+        # Retrieve the data transformation configuration from the main config
         config = self.config.data_transformation
+        common = self.params.CommonParams
 
-        # Create necessary directories
+        # Create the necessary directories for the data transformation
         create_directories([config.root_dir])
 
-        # Create a DataTransformation object with the retrieved configuration
+        # Initialize the DataTransformation object with the configuration parameters
         data_transformation_config = DataTransformation(
             root_dir=config.root_dir,
             data_path=config.data_path,
-            tokenizer_name=config.tokenizer_name
+            tokenizer_name=config.tokenizer_name,
+            do_train=common.do_train,
+            do_eval=common.do_eval,
+            do_predict=common.do_predict,
+            text_column=common.text_column,
+            summary_column=common.summary_column,
+            max_source_length=common.max_source_length,
+            max_target_length=common.max_target_length,
+            padding=common.padding,
+            ignore_pad_token_for_loss=common.ignore_pad_token_for_loss,
         )
 
+        # Return the data transformation configuration
         return data_transformation_config
+
 
 
 
