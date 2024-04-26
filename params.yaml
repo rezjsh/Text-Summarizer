@@ -8,3 +8,17 @@ TrainingArguments:
   eval_steps: 500
   save_steps: 1e6
   gradient_accumulation_steps: 16
+  gradient_checkpointing: True
+  save_total_limit: 3
+  predict_with_generate: True
+
+CommonParams:
+  do_train: True
+  do_eval: True
+  do_predict: True
+  text_column: "dialogue"
+  summary_column: "summary"
+  max_source_length: 1024
+  max_target_length: 128
+  padding: False
+  ignore_pad_token_for_loss: False
